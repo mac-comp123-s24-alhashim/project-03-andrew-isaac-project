@@ -7,3 +7,4 @@ accomplished, who will do what when.  Deliverables: <br>
 <p>Create words.txt file with a list of words that are eligible for use - Isaac <br>
 Create hangman_draw function that draws a hangman body part with turtle - Andrew <br>
 Create a hangman_play function that randomly selects a word and asks the user for the input of one lowercase alphabetic letter - Both <br>
+
