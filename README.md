@@ -8,3 +8,8 @@ accomplished, who will do what when.  Deliverables: <br>
 Create hangman_draw function that draws a hangman body part with turtle - Andrew <br>
 Create a hangman_play function that randomly selects a word and asks the user for the input of one lowercase alphabetic letter - Both <br>
 
+<<<<<<< HEAD
+=======
+![Sketch.jpg](Images%2FSketch.jpg)
+
+>>>>>>> ae8ef7b66bb4cac83414e8f71f3244e65e67f6bc
