@@ -58,16 +58,32 @@ def draw_man(turt, text, error_count):
             turt.forward(100)
             text.clear()
             text.write("YOU LOSE :(")
+            turt.up()
+            turt.goto(-125, 50)
+            turt.setheading(135)
+            turt.down()
+            for i in range(4):
+                turt.forward(10)
+                turt.back(10)
+                turt.left(90)
+            turt.up()
+            turt.goto(-75, 50)
+            turt.setheading(135)
+            turt.down()
+            for i in range(4):
+                turt.forward(10)
+                turt.back(10)
+                turt.left(90)
+
 
 def play_game():
-
+    ...
 
 
 # def main():
 win = turtle.Screen()
 man = turtle.Turtle()
 text = turtle.Turtle()
-
 
 man.speed(0)
 draw_man(man, text, 6)
