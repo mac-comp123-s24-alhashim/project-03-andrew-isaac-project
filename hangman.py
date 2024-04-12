@@ -35,6 +35,7 @@ def draw_man(turt, text, error_count):
             turt.goto(-150, 50)
             turt.down()
             turt.circle(50)
+
         elif cnt == 1:
             turt.setheading(270)
             turt.forward(100)
@@ -74,6 +75,11 @@ def draw_man(turt, text, error_count):
                 turt.forward(10)
                 turt.back(10)
                 turt.left(90)
+            turt.up()
+            turt.goto(-75, 20)
+            turt.setheading(90)
+            turt.down()
+            turt.circle(25, 180)
 
 
 def play_game():
