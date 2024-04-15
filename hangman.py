@@ -94,16 +94,26 @@ class BasicGui:
         self.entry.bind("<Key-Return>", self.entry_response)
 
     def entry_response(self, event):
-        guess = self.entry.get()
-        guess = guess.lower()
+        self.guess = self.entry.get()
+        print(self.guess)
+        self.guess = self.guess.lower()
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        if guess not in alphabet:
+        guessed_letters = []
+        if self.guess not in alphabet:
             self.label_one["text"] = "Please enter a letter!"
-        elif len(guess) != 1:
+        elif len(self.guess) != 1:
             self.label_one["text"] = "please enter only one character!"
+        elif self.guess in guessed_letters:
+            self.label_one["text"] = "please guess a new letter!"
         else:
             self.label_one["text"] = "Type your guess and then press enter!"
-            return guess
+            guessed_letters.append(self.guess)
+            phrase = pick_word(words)
+            if self.guess in phrase:
+                
+
+
+
 
     def run(self):
         self.rootWin.mainloop()
@@ -112,12 +122,15 @@ class BasicGui:
 def check_guess(letter, phrase, scribe):
     scribe.up()
     scribe.goto(100, 0)
-    scribe.right(90)
     for char in phrase:
         scribe.down()
         scribe.forward(20)
         scribe.up()
         scribe.forward(10)
+    if letter in phrase:
+        return True
+    else:
+        return False
 
 
 
@@ -128,9 +141,9 @@ if __name__ == '__main__':
     text = turtle.Turtle()
     guesses = turtle.Turtle()
     man.speed(0)
-
+    check_guess('a', 'apple', guesses)
     myGui = BasicGui()
     myGui.run()
-    check_guess("a", "apple", guesses)
+
 
     win.exitonclick()
