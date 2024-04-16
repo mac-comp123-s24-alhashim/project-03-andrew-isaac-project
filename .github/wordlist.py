@@ -1,6 +1,6 @@
 import random
 
-words = ["Huxley", "Pants", "Robert", "Martin"]
+
 
 def select_word(words):
     return random.choice(words)

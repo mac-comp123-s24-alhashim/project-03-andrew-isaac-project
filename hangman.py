@@ -3,12 +3,12 @@ import random
 import tkinter as tk
 
 def pick_word(wordslist):
-    '''
+    """
     A function that takes a list of words as an input and randomly selects and
     returns one of them.
-    '''
+    """
     dict_length = len(wordslist)
-    rand_num = random.randint(dict_length)
+    rand_num = random.randint(0, dict_length - 1)
     game_word = wordslist[rand_num]
     return game_word
 
@@ -19,7 +19,7 @@ def draw_man(turt, text, error_count):
     '''
     turt.up()
     text.up()
-    text.goto(100, 0)
+    text.goto(100, 20)
     text.down()
 
     for num_errors in range(error_count):
@@ -92,6 +92,9 @@ class BasicGui:
         self.entry = tk.Entry(self.rootWin)
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
+        self.phrase = pick_word(words)
+        self.phrase = self.phrase.lower()
+        print(self.phrase)
 
     def entry_response(self, event):
         self.guess = self.entry.get()
@@ -99,6 +102,8 @@ class BasicGui:
         self.guess = self.guess.lower()
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
         guessed_letters = []
+        error_cnt = 0
+
         if self.guess not in alphabet:
             self.label_one["text"] = "Please enter a letter!"
         elif len(self.guess) != 1:
@@ -108,9 +113,16 @@ class BasicGui:
         else:
             self.label_one["text"] = "Type your guess and then press enter!"
             guessed_letters.append(self.guess)
-            phrase = pick_word(words)
-            if self.guess in phrase:
-                
+            if self.guess in self.phrase:
+                draw_right_answer(self.phrase, self.guess, guesses)
+            #     # TODO: create go_to_letter function that goes to the space where the guessed letter should be
+            #     go_to_letter(text, letter)
+            #     text.write(self.guess)
+            else:
+                error_cnt = error_cnt + 1
+                draw_man(man, text, error_cnt)
+                if error_cnt == 6:
+                    self.rootWin.destroy()
 
 
 
@@ -119,19 +131,27 @@ class BasicGui:
         self.rootWin.mainloop()
 
 
-def check_guess(letter, phrase, scribe):
-    scribe.up()
-    scribe.goto(100, 0)
-    for char in phrase:
-        scribe.down()
-        scribe.forward(20)
-        scribe.up()
-        scribe.forward(10)
-    if letter in phrase:
-        return True
-    else:
-        return False
-
+def draw_right_answer(correct_phrase, right_letter, guess_turtle):
+    """
+    A function that takes in a phrase and a letter and writes spaces for all unguessed letters,
+    as well as writing the correct answer in the spaces it's supposed to go.
+    """
+    guess_turtle.speed(0)
+    guess_turtle.up()
+    guess_turtle.goto(100, 0)
+    for char in correct_phrase:
+        guess_turtle.down()
+        if char == right_letter:
+            guess_turtle.forward(5)
+            guess_turtle.write(char)
+            guess_turtle.forward(5)
+            guess_turtle.up()
+            guess_turtle.forward(5)
+        else:
+            guess_turtle.down()
+            guess_turtle.forward(10)
+            guess_turtle.up()
+            guess_turtle.forward(5)
 
 
 
@@ -140,8 +160,8 @@ if __name__ == '__main__':
     man = turtle.Turtle()
     text = turtle.Turtle()
     guesses = turtle.Turtle()
+    words = ["Huxley", "Pants", "Robert", "Martin"]
     man.speed(0)
-    check_guess('a', 'apple', guesses)
     myGui = BasicGui()
     myGui.run()
 
