@@ -25,7 +25,7 @@ def draw_man(turt, text, error_count):
     for num_errors in range(error_count):
         text.clear()
         error_message = 'Errors remaining', 5 - num_errors
-        text.write(error_message)
+        text.write(error_message, font=("Arial", 12, ))
 
         turt.up()
         turt.goto(-100, 0)
@@ -138,12 +138,14 @@ class BasicGui:
         else:
             self.label_one["text"] = "Type your guess and then press enter!"
             self.guessed_letters.append(self.guess)
-            # TODO: print a list of the guessed letters 
+            # TODO: print a list of the guessed letters
 
             if self.guess in self.phrase:
-                # TODO: fix edge cases with multiples of a letter in a phrase
                 draw_right_answer(self.phrase, self.guess, guesses)
-                self.guessed_right_letters = self.guessed_right_letters + 1
+                new_word = self.phrase.replace(self.guess, "")
+                remaining_chars = len(self.phrase) - len(new_word)
+                self.guessed_right_letters = self.guessed_right_letters + remaining_chars
+                print(self.guessed_right_letters)
                 if self.guessed_right_letters == len(self.phrase):
                     text.clear()
                     text.write("Congratulations, you won!")
@@ -181,7 +183,6 @@ def draw_right_answer(correct_phrase, right_letter, guess_turtle):
             guess_turtle.forward(10)
             guess_turtle.up()
             guess_turtle.forward(5)
-    # TODO: add win screen for if all the letter in the phrase have been guessed
 
 
 if __name__ == '__main__':
@@ -189,10 +190,12 @@ if __name__ == '__main__':
     man = turtle.Turtle()
     man.hideturtle()
     text = turtle.Turtle()
+    text.pensize(2)
     text.hideturtle()
     guesses = turtle.Turtle()
     guesses.hideturtle()
 
+    man.speed(2)
     man.up()
     man.goto(-100, 100)
     man.down()
