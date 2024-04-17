@@ -92,9 +92,25 @@ class BasicGui:
         self.entry = tk.Entry(self.rootWin)
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
+
         self.phrase = pick_word(words)
         self.phrase = self.phrase.lower()
-        print(self.phrase)
+        print("FOR TESTING ONLY: PHRASE IS:", self.phrase)
+
+        text.up()
+        text.goto(100, 20)
+        text.down()
+        text.write('Errors remaining: 6')
+
+        guesses.up()
+        guesses.goto(100, 0)
+        for num_letters in self.phrase:
+            guesses.down()
+            guesses.forward(10)
+            guesses.up()
+            guesses.forward(5)
+
+
 
     def entry_response(self, event):
         self.guess = self.entry.get()
@@ -115,17 +131,13 @@ class BasicGui:
             guessed_letters.append(self.guess)
             if self.guess in self.phrase:
                 draw_right_answer(self.phrase, self.guess, guesses)
-            #     # TODO: create go_to_letter function that goes to the space where the guessed letter should be
-            #     go_to_letter(text, letter)
-            #     text.write(self.guess)
             else:
+                # TODO: fix error cnt bug and add list of printed letters
                 error_cnt = error_cnt + 1
+                print("ERROR_CNT value", error_cnt)
                 draw_man(man, text, error_cnt)
                 if error_cnt == 6:
                     self.rootWin.destroy()
-
-
-
 
     def run(self):
         self.rootWin.mainloop()
@@ -158,8 +170,11 @@ def draw_right_answer(correct_phrase, right_letter, guess_turtle):
 if __name__ == '__main__':
     win = turtle.Screen()
     man = turtle.Turtle()
+    man.hideturtle()
     text = turtle.Turtle()
+    text.hideturtle()
     guesses = turtle.Turtle()
+    guesses.hideturtle()
     words = ["Huxley", "Pants", "Robert", "Martin"]
     man.speed(0)
     myGui = BasicGui()
