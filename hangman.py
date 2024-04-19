@@ -25,7 +25,7 @@ def draw_man(turt, text, error_count):
     for num_errors in range(error_count):
         text.clear()
         error_message = 'Errors remaining', 5 - num_errors
-        text.write(error_message, font=("Arial", 12, ))
+        text.write(error_message, font=("Arial", 12,))
 
         turt.up()
         turt.goto(-100, 0)
@@ -104,12 +104,9 @@ class BasicGui:
         text.up()
         text.goto(100, 20)
         text.down()
-        text.write('Errors remaining: 6')
+        text.write('Errors remaining: 6', font=('Arial', 12))
 
-        # text.up()
-        # text.goto(100, -20)
-        # text.down()
-        # text.write("guessed letters: ")
+
 
         guesses.up()
         guesses.goto(100, 0)
@@ -138,6 +135,11 @@ class BasicGui:
         else:
             self.label_one["text"] = "Type your guess and then press enter!"
             self.guessed_letters.append(self.guess)
+            guessed_letters_string = ("guessed letters: ", self.guessed_letters)
+            text.up()
+            text.goto(100, -20)
+            text.down()
+            text.write("guessed letters: ", font=('Arial', 10))
             # TODO: print a list of the guessed letters
 
             if self.guess in self.phrase:
@@ -173,8 +175,9 @@ def draw_right_answer(correct_phrase, right_letter, guess_turtle):
     for char in correct_phrase:
         guess_turtle.down()
         if char == right_letter:
+            guess_turtle.pensize(2)
             guess_turtle.forward(5)
-            guess_turtle.write(char)
+            guess_turtle.write(char, font=('Arial', 12))
             guess_turtle.forward(5)
             guess_turtle.up()
             guess_turtle.forward(5)
@@ -193,9 +196,10 @@ if __name__ == '__main__':
     text.pensize(2)
     text.hideturtle()
     guesses = turtle.Turtle()
+    guesses.pensize(2)
     guesses.hideturtle()
 
-    man.speed(2)
+    man.speed(0)
     man.up()
     man.goto(-100, 100)
     man.down()
