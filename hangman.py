@@ -59,7 +59,7 @@ def draw_man(turt, text, error_count):
             turt.down()
             turt.forward(100)
             text.clear()
-            text.write("YOU LOSE :(")
+            text.write("YOU LOSE :(", font=("Arial", 12))
             turt.up()
             turt.goto(-125, 50)
             turt.setheading(135)
@@ -92,6 +92,7 @@ class BasicGui:
         self.entry = tk.Entry(self.rootWin)
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
+
 
         self.error_cnt = 0
         self.guessed_letters = []
@@ -134,13 +135,14 @@ class BasicGui:
             self.label_one["text"] = "please guess a new letter!"
         else:
             self.label_one["text"] = "Type your guess and then press enter!"
+            all_letters.clear()
+            all_letters.up()
+            all_letters.goto(100, -20)
+            all_letters.down()
             self.guessed_letters.append(self.guess)
-            guessed_letters_string = ("guessed letters: ", self.guessed_letters)
-            text.up()
-            text.goto(100, -20)
-            text.down()
-            text.write("guessed letters: ", font=('Arial', 10))
-            # TODO: print a list of the guessed letters
+            str_guesses = ''.join(self.guessed_letters)
+            guessed_letters_string = ("guessed letters: ", str_guesses)
+            all_letters.write(guessed_letters_string, font=('Arial', 10))
 
             if self.guess in self.phrase:
                 draw_right_answer(self.phrase, self.guess, guesses)
@@ -150,7 +152,7 @@ class BasicGui:
                 print(self.guessed_right_letters)
                 if self.guessed_right_letters == len(self.phrase):
                     text.clear()
-                    text.write("Congratulations, you won!")
+                    text.write("Congratulations, you won!", font=('Arial', 12))
                     self.rootWin.destroy()
 
             else:
@@ -198,6 +200,9 @@ if __name__ == '__main__':
     guesses = turtle.Turtle()
     guesses.pensize(2)
     guesses.hideturtle()
+    all_letters = turtle.Turtle()
+    all_letters.hideturtle()
+    all_letters.pensize(2)
 
     man.speed(0)
     man.up()
