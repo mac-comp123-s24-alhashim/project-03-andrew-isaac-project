@@ -85,7 +85,9 @@ def draw_man(turt, text, error_count):
 class BasicGui:
 
     def __init__(self):
-        self.rootWin = tk.Tk()
+        # self.rootWin = tk.Tk()
+        self.rootWin = tk.Canvas(master=None,width=500,height=500)
+        self.rootWin.pack()
         self.label_one = tk.Label(self.rootWin)
         self.label_one.grid(row=1, column=2)
         self.label_one["text"] = "Type your guess and then press enter!"
