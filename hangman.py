@@ -168,7 +168,8 @@ class BasicGui:
                 draw_man(man, text, self.error_cnt)
                 if self.error_cnt == 6:
                     for char in self.phrase:
-                        draw_right_answer()
+                        guesses.speed(0)
+                        draw_right_answer(self.phrase, char, guesses)
                     self.rootWin.destroy()
 
     def run(self):
