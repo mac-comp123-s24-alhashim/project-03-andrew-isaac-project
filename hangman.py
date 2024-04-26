@@ -85,7 +85,6 @@ def draw_man(turt, text, error_count):
 class BasicGui:
 
     def __init__(self):
-        # self.rootWin = tk.Tk()
         self.rootWin = tk.Canvas(master=None,width=500,height=500)
         self.rootWin.pack()
         self.label_one = tk.Label(self.rootWin)
@@ -95,6 +94,7 @@ class BasicGui:
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
 
+        # TODO: add quit button
 
         self.error_cnt = 0
         self.guessed_letters = []
@@ -108,8 +108,6 @@ class BasicGui:
         text.goto(100, 20)
         text.down()
         text.write('Errors remaining: 6', font=('Arial', 12))
-
-
 
         guesses.up()
         guesses.goto(100, 0)
@@ -193,7 +191,7 @@ def draw_right_answer(correct_phrase, right_letter, guess_turtle):
 
 
 if __name__ == '__main__':
-    win = turtle.Screen()
+
     man = turtle.Turtle()
     man.hideturtle()
     text = turtle.Turtle()
@@ -222,4 +220,3 @@ if __name__ == '__main__':
     myGui = BasicGui()
     myGui.run()
 
-    win.exitonclick()
