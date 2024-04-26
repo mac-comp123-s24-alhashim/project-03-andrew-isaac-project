@@ -5,6 +5,8 @@ import tkinter as tk
 import wordlist
 from wordlist import all_string
 
+#TODO: if the user loses, draw the rest of the characters
+
 def pick_word(wordslist):
     """
     A function that takes a list of words as an input and randomly selects and
@@ -97,14 +99,11 @@ class BasicGui:
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
 
-
-        # TODO: add quit button
-
         self.error_cnt = 0
         self.guessed_letters = []
         self.guessed_right_letters = 0
 
-        self.phrase = pick_word(words_test)
+        self.phrase = pick_word(words)
         self.phrase = self.phrase.lower()
         print("FOR TESTING ONLY: PHRASE IS:", self.phrase)
 
@@ -126,12 +125,14 @@ class BasicGui:
         self.rootWin.destroy()
 
     def entry_response(self, event):
+        """
+        takes an entered character and checks if it's one alphabetic character. Then, it checks it with the word
+        and either draws the man for
+        """
         self.guess = self.entry.get()
         print(self.guess)
         self.guess = self.guess.lower()
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
-
-
 
         if self.guess not in alphabet:
             self.label_one["text"] = "Please enter a letter!"
@@ -221,9 +222,6 @@ if __name__ == '__main__':
     man.left(90)
     man.forward(400)
     words = wordlist.return_list(all_string)
-    print(words)
-    words_test = ["Macalester", "Cxollege", "Squirrels", "Pants", "Bell", "Scots", "Olri", "CompSci", "Minnesota", "Science", "Python",
-             "Java", "Andrew", "Isaac"]
     man.speed(0)
     myGui = BasicGui()
     myGui.run()
