@@ -167,6 +167,8 @@ class BasicGui:
                 print("ERROR_CNT value", self.error_cnt)
                 draw_man(man, text, self.error_cnt)
                 if self.error_cnt == 6:
+                    for char in self.phrase:
+                        draw_right_answer()
                     self.rootWin.destroy()
 
     def run(self):
