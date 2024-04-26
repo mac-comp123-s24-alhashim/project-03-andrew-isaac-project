@@ -93,6 +93,8 @@ class BasicGui:
         self.entry = tk.Entry(self.rootWin)
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
+        self.quit_button = tk.Button(self.rootWin)
+        self.quit_button
 
         # TODO: add quit button
 

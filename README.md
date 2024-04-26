@@ -8,6 +8,17 @@ accomplished, who will do what when.  Deliverables: <br>
 Create draw_man function that draws a hangman body part with turtle - Andrew <br>
 Create a play_game function that randomly selects a word and asks the user for the input of one lowercase alphabetic letter - Both <br>
 
+<p> How to play<br>
+To begin, run the program and a turtle/tkinter window should open. <br>
+The program will automatically pick a word and draw as many spaces for each character. Just type your guess and press enter to confirm. 
+<br>
+If the guess is wrong, your 'errors remaining' count will decrease, and one body part will be drawn. Otherwise if you are right, your 
+guess <br> will be filled in for all the lines it is present in the word. 
+<br><br>Requirements <br>
+Requires Python 3.12, turtle and pillow/tkinter packages
+
+
+
 =======
 ![Sketch.jpg](Images%2FSketch.jpg)
 
