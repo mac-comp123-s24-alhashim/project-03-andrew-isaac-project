@@ -2,6 +2,9 @@ import turtle
 import random
 import tkinter as tk
 
+import wordlist
+from wordlist import all_string
+
 def pick_word(wordslist):
     """
     A function that takes a list of words as an input and randomly selects and
@@ -93,8 +96,7 @@ class BasicGui:
         self.entry = tk.Entry(self.rootWin)
         self.entry.grid(row=2, column=2)
         self.entry.bind("<Key-Return>", self.entry_response)
-        self.quit_button = tk.Button(self.rootWin)
-        self.quit_button
+
 
         # TODO: add quit button
 
@@ -102,7 +104,7 @@ class BasicGui:
         self.guessed_letters = []
         self.guessed_right_letters = 0
 
-        self.phrase = pick_word(words)
+        self.phrase = pick_word(words_test)
         self.phrase = self.phrase.lower()
         print("FOR TESTING ONLY: PHRASE IS:", self.phrase)
 
@@ -120,6 +122,8 @@ class BasicGui:
             guesses.forward(5)
 
 
+    def quit_callback(self):
+        self.rootWin.destroy()
 
     def entry_response(self, event):
         self.guess = self.entry.get()
@@ -216,8 +220,10 @@ if __name__ == '__main__':
     man.forward(100)
     man.left(90)
     man.forward(400)
-
-    words = ["Huxley", "Pants", "Robert", "Martin"]
+    words = wordlist.return_list(all_string)
+    print(words)
+    words_test = ["Macalester", "Cxollege", "Squirrels", "Pants", "Bell", "Scots", "Olri", "CompSci", "Minnesota", "Science", "Python",
+             "Java", "Andrew", "Isaac"]
     man.speed(0)
     myGui = BasicGui()
     myGui.run()
