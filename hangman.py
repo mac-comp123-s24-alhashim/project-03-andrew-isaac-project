@@ -5,7 +5,7 @@ import tkinter as tk
 import wordlist
 from wordlist import all_string
 
-#TODO: if the user loses, draw the rest of the characters
+#TODO: add docstrings for each function and clear text entry after each input
 
 def pick_word(wordslist):
     """
@@ -127,10 +127,9 @@ class BasicGui:
     def entry_response(self, event):
         """
         takes an entered character and checks if it's one alphabetic character. Then, it checks it with the word
-        and either draws the man for
+        and either draws the man for the number of errors had or draws the correct characters inputted
         """
         self.guess = self.entry.get()
-        print(self.guess)
         self.guess = self.guess.lower()
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -156,7 +155,6 @@ class BasicGui:
                 new_word = self.phrase.replace(self.guess, "")
                 remaining_chars = len(self.phrase) - len(new_word)
                 self.guessed_right_letters = self.guessed_right_letters + remaining_chars
-                print(self.guessed_right_letters)
                 if self.guessed_right_letters == len(self.phrase):
                     text.clear()
                     text.write("Congratulations, you won!", font=('Arial', 12))
@@ -164,7 +162,6 @@ class BasicGui:
 
             else:
                 self.error_cnt = self.error_cnt + 1
-                print("ERROR_CNT value", self.error_cnt)
                 draw_man(man, text, self.error_cnt)
                 if self.error_cnt == 6:
                     for char in self.phrase:
