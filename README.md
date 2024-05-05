@@ -17,6 +17,9 @@ guess <br> will be filled in for all the lines it is present in the word.
 <br><br>Requirements <br>
 Requires Python 3.12, turtle and pillow/tkinter packages
 
+https://youtu.be/WDq_ITqXW-0
+
+
 
 
 =======
