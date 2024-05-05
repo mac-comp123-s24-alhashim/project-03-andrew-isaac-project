@@ -1,13 +1,19 @@
 import turtle
 import random
+import tkinter as tk
+
+import wordlist
+from wordlist import all_string
+
+#TODO: add docstrings for each function and clear text entry after each input
 
 def pick_word(wordslist):
-    '''
+    """
     A function that takes a list of words as an input and randomly selects and
     returns one of them.
-    '''
+    """
     dict_length = len(wordslist)
-    rand_num = random.randint(dict_length)
+    rand_num = random.randint(0, dict_length - 1)
     game_word = wordslist[rand_num]
     return game_word
 
@@ -18,47 +24,47 @@ def draw_man(turt, text, error_count):
     '''
     turt.up()
     text.up()
-    text.goto(100, 0)
+    text.goto(100, 20)
     text.down()
 
-    for cnt in range(error_count):
+    for num_errors in range(error_count):
         text.clear()
-        error_message = 'Errors remaining', 5 - cnt
-        text.write(error_message)
+        error_message = 'Errors remaining', 5 - num_errors
+        text.write(error_message, font=("Arial", 12,))
 
         turt.up()
         turt.goto(-100, 0)
         turt.down()
         turt.setheading(270)
-        if cnt == 0:
+        if num_errors == 0:
             turt.up()
             turt.goto(-150, 50)
             turt.down()
             turt.circle(50)
 
-        elif cnt == 1:
+        elif num_errors == 1:
             turt.setheading(270)
             turt.forward(100)
-        elif cnt == 2:
+        elif num_errors == 2:
             turt.setheading(315)
             turt.forward(100)
-        elif cnt == 3:
+        elif num_errors == 3:
             turt.setheading(225)
             turt.forward(100)
-        elif cnt == 4:
+        elif num_errors == 4:
             turt.up()
             turt.goto(-100, -100)
             turt.setheading(225)
             turt.down()
             turt.forward(100)
-        elif cnt == 5:
+        elif num_errors == 5:
             turt.up()
             turt.goto(-100, -100)
             turt.setheading(315)
             turt.down()
             turt.forward(100)
             text.clear()
-            text.write("YOU LOSE :(")
+            text.write("YOU LOSE :(", font=("Arial", 12))
             turt.up()
             turt.goto(-125, 50)
             turt.setheading(135)
@@ -81,17 +87,142 @@ def draw_man(turt, text, error_count):
             turt.down()
             turt.circle(25, 180)
 
+class BasicGui:
 
-def play_game():
-    ...
+    def __init__(self):
+        self.rootWin = tk.Canvas(master=None,width=500,height=500)
+        self.rootWin.pack()
+        self.label_one = tk.Label(self.rootWin)
+        self.label_one.grid(row=1, column=2)
+        self.label_one["text"] = "Type your guess and then press enter!"
+        self.entry = tk.Entry(self.rootWin)
+        self.entry.grid(row=2, column=2)
+        self.entry.bind("<Key-Return>", self.entry_response)
+
+        self.error_cnt = 0
+        self.guessed_letters = []
+        self.guessed_right_letters = 0
+
+        self.phrase = pick_word(words)
+        self.phrase = self.phrase.lower()
+        print("FOR TESTING ONLY: PHRASE IS:", self.phrase)
+
+        text.up()
+        text.goto(100, 20)
+        text.down()
+        text.write('Errors remaining: 6', font=('Arial', 12))
+
+        guesses.up()
+        guesses.goto(100, 0)
+        for num_letters in self.phrase:
+            guesses.down()
+            guesses.forward(10)
+            guesses.up()
+            guesses.forward(5)
 
 
-# def main():
-win = turtle.Screen()
-man = turtle.Turtle()
-text = turtle.Turtle()
+    def quit_callback(self):
+        self.rootWin.destroy()
 
-man.speed(0)
-draw_man(man, text, 6)
+    def entry_response(self, event):
+        """
+        takes an entered character and checks if it's one alphabetic character. Then, it checks it with the word
+        and either draws the man for the number of errors had or draws the correct characters inputted
+        """
+        self.guess = self.entry.get()
+        self.guess = self.guess.lower()
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-win.exitonclick()
+        if self.guess not in alphabet:
+            self.label_one["text"] = "Please enter a letter!"
+        elif len(self.guess) != 1:
+            self.label_one["text"] = "please enter only one character!"
+        elif self.guess in self.guessed_letters:
+            self.label_one["text"] = "please guess a new letter!"
+        else:
+            self.label_one["text"] = "Type your guess and then press enter!"
+            all_letters.clear()
+            all_letters.up()
+            all_letters.goto(100, -20)
+            all_letters.down()
+            self.guessed_letters.append(self.guess)
+            str_guesses = ''.join(self.guessed_letters)
+            guessed_letters_string = ("guessed letters: ", str_guesses)
+            all_letters.write(guessed_letters_string, font=('Arial', 10))
+
+            if self.guess in self.phrase:
+                draw_right_answer(self.phrase, self.guess, guesses)
+                new_word = self.phrase.replace(self.guess, "")
+                remaining_chars = len(self.phrase) - len(new_word)
+                self.guessed_right_letters = self.guessed_right_letters + remaining_chars
+                if self.guessed_right_letters == len(self.phrase):
+                    text.clear()
+                    text.write("Congratulations, you won!", font=('Arial', 12))
+                    self.rootWin.destroy()
+
+            else:
+                self.error_cnt = self.error_cnt + 1
+                draw_man(man, text, self.error_cnt)
+                if self.error_cnt == 6:
+                    for char in self.phrase:
+                        guesses.speed(0)
+                        draw_right_answer(self.phrase, char, guesses)
+                    self.rootWin.destroy()
+
+    def run(self):
+        self.rootWin.mainloop()
+
+
+def draw_right_answer(correct_phrase, right_letter, guess_turtle):
+    """
+    A function that takes in a phrase and a letter and writes spaces for all unguessed letters,
+    as well as writing the correct answer in the spaces it's supposed to go.
+    """
+    guess_turtle.speed(0)
+    guess_turtle.up()
+    guess_turtle.goto(100, 0)
+    for char in correct_phrase:
+        guess_turtle.down()
+        if char == right_letter:
+            guess_turtle.pensize(2)
+            guess_turtle.forward(5)
+            guess_turtle.write(char, font=('Arial', 12))
+            guess_turtle.forward(5)
+            guess_turtle.up()
+            guess_turtle.forward(5)
+        else:
+            guess_turtle.down()
+            guess_turtle.forward(10)
+            guess_turtle.up()
+            guess_turtle.forward(5)
+
+
+if __name__ == '__main__':
+
+    man = turtle.Turtle()
+    man.hideturtle()
+    text = turtle.Turtle()
+    text.pensize(2)
+    text.hideturtle()
+    guesses = turtle.Turtle()
+    guesses.pensize(2)
+    guesses.hideturtle()
+    all_letters = turtle.Turtle()
+    all_letters.hideturtle()
+    all_letters.pensize(2)
+
+    man.speed(0)
+    man.up()
+    man.goto(-100, 100)
+    man.down()
+    man.left(90)
+    man.forward(50)
+    man.left(90)
+    man.forward(100)
+    man.left(90)
+    man.forward(400)
+    words = wordlist.return_list(all_string)
+    man.speed(0)
+    myGui = BasicGui()
+    myGui.run()
+
